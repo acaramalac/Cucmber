@@ -14,6 +14,7 @@ Feature: Export results to .xlsx file
 
 
 
+#    refactor all xpaths to css selectors
 
 #    refactor importToExcelMetod:
 #  1. parametherize this test (add two more search words)
