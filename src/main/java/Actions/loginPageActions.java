@@ -5,10 +5,10 @@ import org.openqa.selenium.WebDriver;
 
 public class loginPageActions extends BaseAction {
 
-    private By findLoginLocator = By.xpath("//*[@id=\"pt-login\"]");
-    private By usernameLocator = By.xpath("//*[@id=\"wpName1\"]");
-    private By passwordLocator = By.xpath("//*[@id=\"wpPassword1\"]");
-    private By loginButtonLocator = By.id("wpLoginAttempt");
+    private By findLoginLocator = By.cssSelector("#pt-login > a");
+    private By usernameLocator = By.cssSelector("#wpName1");
+    private By passwordLocator = By.cssSelector("#wpPassword1");
+    private By loginButtonLocator = By.cssSelector("#wpLoginAttempt");
     private String url = "https://en.wikipedia.org/wiki/Main_Page";
     public final String title = "Wikipedia, the free encyclopedia";
 

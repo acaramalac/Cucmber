@@ -23,15 +23,6 @@ public class Excel_Import extends BaseAction {
         //Create a blank sheet
         XSSFSheet sheet = workbook.createSheet("Data");
 
-        //This data needs to be written (Object[])
-
-//        Map<String, Object[]> data = new TreeMap<String, Object[]>();
-//        data.put("1", new Object[]{"ID", "NAME", "LASTNAME"});
-//        data.put("2", new Object[]{1, "Amit", "Shukla"});
-//        data.put("3", new Object[]{2, "Lokesh", "Gupta"});
-//        data.put("4", new Object[]{3, "John", "Adwards"});
-//        data.put("5", new Object[]{4, "Brian", "Schultz"});
-
         //Iterate over data and write to sheet
         Set<String> keyset = data.keySet();
 
@@ -62,10 +53,11 @@ public class Excel_Import extends BaseAction {
         try
         {
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File("D:\\Projects\\Cucumber\\src\\main\\resources\\ImportedResults.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File("D:\\Projects\\Cucumber\\src\\main\\resources\\"
+                    + driver.getTitle() + ".xlsx"));
             workbook.write(out);
             out.close();
-            System.out.println("howtodoinjava_demo.xlsx written successfully on disk.");
+            System.out.println("File was written successfully on disk.");
         }
         catch (Exception e)
         {

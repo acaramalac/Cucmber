@@ -5,7 +5,6 @@ import Actions.HomePage;
 import Actions.SearchActions;
 import Actions.loginPageActions;
 import Excel.Excel_Import;
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -26,6 +25,8 @@ public class StepDefs {
     SearchActions searchAction;
     ExcelActions excelActions;
     Excel_Import excel_import;
+    String search = null;
+
 
     @Before
     public void setUp() {
@@ -45,6 +46,7 @@ public class StepDefs {
     public void userIsOnMainPage() {
 //        setUp();
         loginPage.openMainPage();
+
     }
 
     @When("^user opens login page$")
@@ -52,18 +54,10 @@ public class StepDefs {
         loginPage.openLoginPage();
     }
 
-    @And("^user is redirected to Login page$")
+    @Then("^user is redirected to Login page$")
     public void userIsRedirectedToLoginPage() {
         Assert.assertTrue("Assert that user is on login page", homePage.loginTitleIsDisplayed());
     }
-
-
-/*    @And("^user enters the following credentials$")
-    public void userEntersTheFollowingCredentials(DataTable table) throws Throwable {
-        List<List<String>> data = table.raw();
-        System.out.println(data.get(0).get(0));
-        System.out.println(data.get(0).get(1));
-    }*/
 
     @And("^user enters ([^\"]*) and ([^\"]*)$")
     public void userEntersUserNameAndPassword(String UserName, String Password) throws NoAlertPresentException {
@@ -72,11 +66,15 @@ public class StepDefs {
 //        System.out.println("Alert message is : " + alert);
     }
 
+    @Then("^([^\"]*) is displayed$")
+    public void pageIsDisplayed(String pageTitle) {
+            Assert.assertThat(driver.getTitle(), Matchers.containsString(pageTitle));
+    }
+
     @Then("^user is redirected to the Welcome to Wikipedia page$")
     public void userIsRedirectedToTheWelcomeToWikipediaPage() {
         Assert.assertTrue("Assert that username is not missing", homePage.userNameIsDisplayed());
     }
-
 
     @Given("^user is logged in using ([^\"]*) and ([^\"]*)$")
     public void userIsLoggedInUsingUserNameAndPassword(String UserName, String Password) {
@@ -90,10 +88,11 @@ public class StepDefs {
         searchAction.openSearchPage();
     }
 
-    @And("^user enters (.*)$")
+    @And("^user introduces (.*)$")
     public void userEntersSearchKeyWords(String searchKeyWords) throws InterruptedException {
         searchAction.searchFor(searchKeyWords);
         searchAction.search();
+        this.search = searchKeyWords;
     }
 
     @Then("^user gets search results$")
@@ -105,14 +104,14 @@ public class StepDefs {
     @Given("^user is on search page$")
     public void userIsOnSearchPage() {
         searchAction.openSearchpageDirectly();
-
     }
 
-    @Then("^filtered results are imported to excel file$")
-    public void filteredResultsAreImportedToExcelFile() {
-        excel_import.importExcel(excelActions.addToExcel());
+    @Then("^a (.*) of results are filtered and imported to excel file$")
+    public void filteredResultsAreImportedToExcelFile(int numberToFilter) {
+        excel_import.importExcel(excelActions.addToExcel(numberToFilter, search));
     }
 
     @After
     public void tearDown() { driver.quit(); }
+
 }

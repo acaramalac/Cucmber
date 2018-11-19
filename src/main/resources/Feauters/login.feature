@@ -17,15 +17,14 @@ Feature: Login to the system
   Scenario Outline: User can login using valid credentials using Scenario Outline
     Given user is on main page
     When user opens login page
-    And user is redirected to Login page
-  #//then should be above (instead of "And")
+    Then user is redirected to Login page
     And user enters <UserName> and <Password>
-    Then <page> is displayed
-    Then user is redirected to the <Welcome> to Wikipedia page
+    Then <pageTitle> is displayed
+    Then user is redirected to the Welcome to Wikipedia page
 
     Examples:
-      | UserName  | Password | page |
-      | sniper342 |          |      |
-      |           | 123      |      |
-      | sniper342 | 82006521 |      |
+      | UserName  | Password | pageTitle                        |
+      | sniper342 |          | Log in - Wikipedia               |
+      |           | 123      | Log in - Wikipedia               |
+      | sniper342 | 82006521 | Wikipedia, the free encyclopedia |
 

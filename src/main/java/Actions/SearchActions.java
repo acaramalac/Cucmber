@@ -2,15 +2,13 @@ package Actions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class SearchActions extends BaseAction {
 
     private String directSearchUrl = "https://en.wikipedia.org/w/index.php?search=&title=Special%3ASearch&go=Go";
-    private By searchButtonLocator = By.className("searchButton");
-    private By inputField = By.xpath("//*[@id=\"ooui-php-1\"]");
-    private By buttonToSearch = By.xpath("//*[@id=\"mw-search-top-table\"]/div/div/div/span/span/button");
+    private By searchButtonLocator = By.cssSelector("#searchButton");
+    private By inputField = By.cssSelector("#ooui-php-1");
+    private By buttonToSearch = By.cssSelector("#mw-search-top-table > div > div > div > span > span > button");
     public final String searchText = "exception handling";
     public final String searchPageTitle = "Search - Wikipedia";
 

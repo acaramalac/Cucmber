@@ -63,7 +63,7 @@ public class LoginTest {
         searchAfterLogin();
 
         // addToExcel method executes in parentheses before importExcel method
-        excel_import.importExcel(excelActions.addToExcel());
+        excel_import.importExcel(excelActions.addToExcel(100, "lol kek"));
     }
 
     @After
