@@ -17,17 +17,18 @@ public class ExcelActions extends BaseAction {
 
     private By linkToNextPage = By.className("mw-nextlink");
 
-    public Map<String, Object[]> addToExcel(int exitCriteria, String search) {
+    public Map<Integer, Object[]> addToExcel(int exitCriteria, String search) {
 
 //      Split the String into parts
-        Iterable<String> parts = Splitter.on(" ").split(search);
+        Iterable<String> parts = Splitter.on(" ").split(search.toLowerCase());
 
         String beforeXpath_pageName = "//*[@id=\"mw-content-text\"]/div[3]/ul/li[";
         String afterXpath_pageName = "]/div[1]/a";
 
         int count = 0;
+        int index = 0;
         int rowCount = 20;
-        Map<String, Object[]> data = new TreeMap<String, Object[]>();
+        Map<Integer, Object[]> data = new TreeMap<>();
 
         while (count < exitCriteria) {
             for (int i = 1; i <= rowCount; i++) {
@@ -43,7 +44,8 @@ public class ExcelActions extends BaseAction {
                         String pageLink = link.getAttribute("href");
                         System.out.println(pageLink);
 
-                        data.put("" + i, new Object[]{i, pageName, pageLink});
+                        data.put(index, new Object[]{index, pageName, pageLink});
+                        index++;
                     }
                 }
                 count++;

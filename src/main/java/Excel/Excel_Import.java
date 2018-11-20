@@ -1,6 +1,7 @@
 package Excel;
 
 import Actions.BaseAction;
+import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,9 +15,11 @@ import java.util.Set;
 
 public class Excel_Import extends BaseAction {
 
-    public Excel_Import(WebDriver driver) { super(driver); }
+    public Excel_Import(WebDriver driver) {
+        super(driver);
+    }
 
-    public void importExcel(Map<String, Object[]> data) {
+    public void importExcel(Map<Integer, Object[]> data) {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -24,11 +27,10 @@ public class Excel_Import extends BaseAction {
         XSSFSheet sheet = workbook.createSheet("Data");
 
         //Iterate over data and write to sheet
-        Set<String> keyset = data.keySet();
+        Set<Integer> keyset = data.keySet();
 
         int rownum = 0;
-        for (String key : keyset)
-        {
+        for (Integer key : keyset) {
             //create a row of excel sheet
             Row row = sheet.createRow(rownum++);
 
@@ -37,30 +39,23 @@ public class Excel_Import extends BaseAction {
 
             int cellnum = 0;
 
-            for (Object obj : objArr)
-            {
+            for (Object obj : objArr) {
                 Cell cell = row.createCell(cellnum++);
-                if (obj instanceof String)
-                {
+                if ( obj instanceof String ) {
                     cell.setCellValue((String) obj);
-                }
-                else if (obj instanceof Integer)
-                {
+                } else if ( obj instanceof Integer ) {
                     cell.setCellValue((Integer) obj);
                 }
             }
         }
-        try
-        {
+        try {
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(new File("D:\\Projects\\Cucumber\\src\\main\\resources\\"
                     + driver.getTitle() + ".xlsx"));
             workbook.write(out);
             out.close();
             System.out.println("File was written successfully on disk.");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

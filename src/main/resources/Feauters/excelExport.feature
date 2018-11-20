@@ -11,7 +11,7 @@ Feature: Export results to .xlsx file
       | searchKeyWords     | number |
 #      | exception handling | 70     |
 #      | Barbra Streisand   | 20     |
-      | 99 Bottles of Beer | 400    |
+      | 99 Bottles of Beer | 300    |
 #      | Expendables        | 250    |
 
 
