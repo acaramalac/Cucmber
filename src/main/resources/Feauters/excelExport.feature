@@ -1,3 +1,4 @@
+@ExcelExport
 Feature: Export results to .xlsx file
   Here we will import filtered results to an excel file
 
@@ -9,10 +10,10 @@ Feature: Export results to .xlsx file
 
     Examples:
       | searchKeyWords     | number |
-#      | exception handling | 70     |
-#      | Barbra Streisand   | 20     |
+      | exception handling | 70     |
+      | Barbra Streisand   | 20     |
       | 99 Bottles of Beer | 300    |
-#      | Expendables        | 250    |
+      | Expendables        | 250    |
 
 
 #    refactor all xpaths to css selectors

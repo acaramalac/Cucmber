@@ -5,7 +5,6 @@ import Actions.HomePage;
 import Actions.SearchActions;
 import Actions.loginPageActions;
 import Excel.Excel_Import;
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -29,15 +28,30 @@ public class StepDefs {
     String search = null;
 
 
+
     @Before
-    public void setUp() {
+    public void setUp(){
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
+    }
 
+    @Before("@Login")
+    public void setUpBeforeLogin() {
         loginPage = new loginPageActions(driver);
         homePage = new HomePage(driver);
+    }
+
+    @Before("@Search")
+    public void setUpBeforeSearch(){
+        loginPage = new loginPageActions(driver);
+        homePage = new HomePage(driver);
+        searchAction = new SearchActions(driver);
+    }
+
+    @Before("@ExcelExport")
+    public void setUpBeforeExcelExport(){
         searchAction = new SearchActions(driver);
         excelActions = new ExcelActions(driver);
         excel_import = new Excel_Import(driver);
@@ -45,7 +59,6 @@ public class StepDefs {
 
     @Given("^user is on main page$")
     public void userIsOnMainPage() {
-//        setUp();
         loginPage.openMainPage();
 
     }
