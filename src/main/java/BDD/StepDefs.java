@@ -5,6 +5,10 @@ import Actions.HomePage;
 import Actions.SearchActions;
 import Actions.loginPageActions;
 import Excel.Excel_Import;
+import Transformation.EmailTransform;
+import Transformation.IntegerTransform;
+import cucumber.api.PendingException;
+import cucumber.api.Transform;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -28,9 +32,8 @@ public class StepDefs {
     String search = null;
 
 
-
     @Before
-    public void setUp(){
+    public void setUp() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -44,14 +47,14 @@ public class StepDefs {
     }
 
     @Before("@Search")
-    public void setUpBeforeSearch(){
+    public void setUpBeforeSearch() {
         loginPage = new loginPageActions(driver);
         homePage = new HomePage(driver);
         searchAction = new SearchActions(driver);
     }
 
     @Before("@ExcelExport")
-    public void setUpBeforeExcelExport(){
+    public void setUpBeforeExcelExport() {
         searchAction = new SearchActions(driver);
         excelActions = new ExcelActions(driver);
         excel_import = new Excel_Import(driver);
@@ -82,7 +85,7 @@ public class StepDefs {
 
     @Then("^([^\"]*) is displayed$")
     public void pageIsDisplayed(String pageTitle) {
-            Assert.assertThat(driver.getTitle(), Matchers.containsString(pageTitle));
+        Assert.assertThat(driver.getTitle(), Matchers.containsString(pageTitle));
     }
 
     @Then("^user is redirected to the Welcome to Wikipedia page$")
@@ -125,6 +128,19 @@ public class StepDefs {
         excel_import.importExcel(excelActions.addToExcel(numberToFilter, search));
     }
 
+    @And("^I enter user's email: (.*)$")
+    public void iEnterUserSEmail(@Transform(EmailTransform.class) String email) {
+        System.out.println("The email is: " + email);
+    }
+
+    @And("^I verify the number of his emails in digits (\\d+)$")
+    public void iVerifyTheNumberOfHisEmailsInDigits(@Transform(IntegerTransform.class)  int emailCount) {
+        System.out.println("User's email count is: " + emailCount);
+    }
+
     @After
-    public void tearDown() { driver.quit(); }
+    public void tearDown() {
+        driver.quit();
+    }
+
 }
